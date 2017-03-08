@@ -1,0 +1,84 @@
+package TEST;
+
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+
+class noddyyy {
+	 int data;
+    noddyyy right;
+    noddyyy left;
+    
+    
+    noddyyy(int d) {
+        data = d;
+        left =  null;
+        right=null;
+    }
+}
+ 
+
+public class labexam1 {
+	static noddyyy root;
+	 public noddyyy insert (noddyyy root, int value) {
+		if(root==null)
+		{
+			root=new noddyyy(value);
+		}
+		else
+		{
+			if(value<root.data)
+			{
+				root.left=insert(root.left,value);
+			}
+			else
+			{
+				root.right=insert(root.right ,value);
+			}
+			
+			
+		}
+		return root;
+	}
+	    void printInorder(noddyyy node) {
+	        if (node == null) {
+	            return;
+	        }
+	        printInorder(node.left);
+	        System.out.print(node.data + " ");
+	        printInorder(node.right);
+	    }
+
+	    public static void main(String[] args) throws IOException {
+			BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
+			String s=reader.readLine();
+			int T = Integer.parseInt(s);
+//	        noddyyy tree = new noddyyy();
+			String siu=reader.readLine();
+			int TI = Integer.parseInt(siu);
+
+	        int pre[] = new int[T];
+	        for(int a=0;a<T;a++)
+	        {
+	    		String s1=reader.readLine();
+	    		int T1 = Integer.parseInt(s1);
+
+	        	pre[a]=T1;
+	        }
+	        noddyyy noddy=new noddyyy(pre[0]);
+
+	        labexam1 zo = new labexam1();
+	        zo.root=noddy;
+	        for(int k=1; k<T;k++){
+	            
+	            zo.root=zo.insert(zo.root, pre[k]);
+	        }
+	        zo.printInorder(root);
+
+//	        for(int j=1;j<T;j++)
+//	        {
+//	        	insert(noddy,pre[j]);
+//	        }
+	        
+	    }
+}

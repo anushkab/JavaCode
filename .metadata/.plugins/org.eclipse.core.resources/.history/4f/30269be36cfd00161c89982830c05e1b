@@ -1,0 +1,162 @@
+package TEST;
+import java.io.*;
+class stackm{
+	 int size;
+	 String[] sstack;
+	 int top=-1;
+ public stackm(){
+	 this.size=3000;
+      sstack= new String[(int) size];
+	 }
+	public void push(String item){
+		this.sstack[(int) (this.top+1)]=item;
+		this.top++;
+	}
+	public boolean isEmpty() {
+		// TODO Auto-generated method stub
+		return top<0;
+	}
+		public String pop(){
+		if (this.isEmpty())
+		{
+			{return "#";}
+		}
+		String e=this.sstack[(int) top];
+		this.sstack[(int) top]=null;
+		top--;
+		return e;
+	}
+	public String topelem()
+	{
+		if (this.isEmpty())
+		{
+//			System.out.println("isEmpty so printong #");
+			{return "#";}
+		}
+		String e=this.sstack[(int) top];
+		return e;
+	}
+}
+public class lab777 {
+	public static stackm ADD(stackm a,stackm b){
+	if(a.top<b.top)//having a as the high one
+	{
+		 stackm temp =a;
+		a=b;
+		b=temp;
+			}
+	int carry=0;
+	stackm addedstack=new stackm();
+	
+	while(!(a.isEmpty()) && !(b.isEmpty()))
+	{
+		int adding=Integer.parseInt(a.pop())+Integer.parseInt(b.pop()) +carry;
+	int add=adding%10;
+	addedstack.push(String.valueOf(add));
+	carry=adding/10;
+	}
+	while(!a.isEmpty())//a is not empptyyyyyyyyy
+	{
+		int adding=Integer.parseInt(a.pop()) +carry;
+		
+		addedstack.push(String.valueOf(adding%10));
+		carry=adding/10;
+	}
+	while(!b.isEmpty())//a is not empptyyyyyyyyy
+	{
+		int adding=Integer.parseInt(b.pop()) +carry;
+		addedstack.push(String.valueOf(adding%10));
+		carry=adding/10;
+	}
+
+	if (carry!=0){
+		addedstack.push(String.valueOf(carry));
+	};
+	stackm finaladded= new stackm();
+	while(!addedstack.isEmpty())
+	{
+		finaladded.push(addedstack.pop());
+	}
+
+	return finaladded;
+		}
+	
+	public static void display(stackm x)
+	{
+		for(int h=x.top;h>=0;h--)
+		{
+			System.out.print(x.sstack[(int) h]);
+		}
+		System.out.println();
+	}
+
+	
+	public static stackm multiply(  stackm a,int b)
+	{
+		stackm sum=new stackm();
+		sum.push("0");
+		
+		String[] number2= String.valueOf(b).split("");
+		stackm adder=new stackm();		
+		int gi=number2.length-1;
+			for (int p=number2.length-1;p>=0;p--)
+				
+					{
+						int b1=Integer.parseInt(number2[(int) p]);
+						String[] number1= (a.sstack);
+						int carry=0;
+						for (int j=a.top;j>=0;j--)
+						{
+								int tobepushed=((Integer.parseInt(number1[j]))*b1 +carry)%10;
+								carry =((Integer.parseInt(number1[j]))*b1 +carry) /10;
+								adder.push(String.valueOf(tobepushed));
+								
+						}	
+						if (carry!=0)
+						{
+							adder.push(String.valueOf(carry));
+						}
+					adder=reverse_the_stack(adder);
+					for(int f=0; f<gi-p;f++)
+						{
+						adder.push("0");
+						}
+		
+//					display(adder);
+		
+		sum=ADD(sum,adder);
+	}
+			return sum;
+	}
+	public static stackm reverse_the_stack(stackm m)
+	{
+		stackm reversed= new  stackm();
+		while(!m.isEmpty())
+		{
+			reversed.push(m.pop());
+		}
+		return reversed;
+	}
+
+	public lab777() {
+		// TODO Auto-generated constructor stub
+	}
+
+	public static void main(String[] args) throws IOException
+	
+	{			BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
+	
+	String s=reader.readLine();
+	int n = Integer.parseInt(s);
+	stackm one =new stackm();
+	one.push("1");
+	for(int a=2;a<=n;a++)	
+	{
+	one=multiply(one,a);
+
+		}
+display(reverse_the_stack(one));
+System.out.println();
+
+}
+}

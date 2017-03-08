@@ -1,0 +1,163 @@
+package TEST;
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+
+public class intStack {
+	public Integer top=-1;
+	public static Integer capacity=3000;
+	public Integer c;
+	public Integer s[];
+	
+	public intStack(){
+		this(capacity);
+	}
+	
+	public intStack (Integer cap) {
+		c=cap;
+		s=new Integer[c];
+	}
+	
+	public int size(){
+		return(top+1);
+	}
+
+	public void print(){
+		for(int i=0; i<this.size(); i++){
+			System.out.print(this.s[i]);
+		}
+	}	
+	
+	public void push(Integer n){
+		s[this.top+1]=n;
+		this.top+=1;
+	}
+	
+	public Integer pop(){
+		if (this.top>=0){
+			Integer ptr=s[this.top];
+			s[this.top]=null;
+			this.top--;
+			return(ptr);
+			}
+		return(null);
+	}
+		
+	public intStack reverse(){
+		intStack S=new intStack();
+		while(this.top!=-1){
+			S.push(this.pop());
+		}
+		return(S);
+	}
+	 
+
+//	public intStack mult(intStack n, Integer m){
+//		intStack result=new intStack();
+//		Integer product=0;
+//		Integer carry=0;
+//		Integer p=0;
+//		while(m!=0){
+//			intStack l=new intStack();
+//			int placevalue=0;
+//			for(int i=0; i<placevalue; i++){
+//				l.push(0);
+//			}
+//			
+//		}
+//	}
+	
+	public static intStack add(intStack a, intStack b){
+		intStack resultrev=new intStack();
+		Integer sum=0;
+		Integer carry=0;
+		Integer as=a.size();
+		Integer bs=b.size();
+		a=a.reverse();
+		//a.print(); //
+		//System.out.println(); //
+		b=b.reverse();
+		/*b.print();  //
+		System.out.println();*/
+		Integer j;
+if(as>bs)
+{
+	j=as;
+}
+else
+{
+	j=bs;
+}
+		for (int i=0; i<j; i++){
+			if(a.size()!=0 && b.size()!=0){
+				sum=a.pop()+b.pop()+carry;
+				//System.out.println(sum);
+			}
+			else if(a.size()==0){
+				sum=b.pop()+carry;
+			}
+			else if(b.size()==0){
+				sum=a.pop()+carry;
+			}
+			resultrev.push(sum%10);
+			carry=sum/10;
+		}
+		if (carry!=0){
+			resultrev.push(carry);
+		}
+		intStack result=resultrev.reverse();
+		return(result);
+	}
+	
+	public intStack mult(Integer n){
+		Integer si=this.size();
+		Integer m=n;
+		intStack result=new intStack();
+		int placevalue=0;
+		while (m!=0){
+			Integer product=0;
+			Integer carry=0;
+			intStack l=new intStack();
+			for (int i=0; i<placevalue; i++){
+				l.push(0);
+			}
+			for (int i=0; i<si; i++){
+				product=this.s[i]*(m%10)+carry;
+				l.push(product%10);
+				carry=product/10;
+			}
+			m/=10;
+			if (carry!=0){
+				l.push(carry);
+			}
+			//l.print();
+			//System.out.println();
+			result=result.reverse();
+			result=add(result,l);
+			placevalue++;
+		}
+		return(result);
+	}
+	
+	public static intStack factorial(Integer n){
+		Integer m=n;
+		intStack result=new intStack();
+		while(m!=0){
+			result.push(m%10);
+			m=m/10;
+		}
+		for(int i=n-1; i>1; i--){
+			result=result.mult(i);
+			result=result.reverse();
+		}
+		result=result.reverse();
+		return(result);
+	}
+
+public static void main(String[] args) throws NumberFormatException, IOException {
+	BufferedReader inp = new BufferedReader (new InputStreamReader(System.in));
+	 int n=Integer.parseInt(inp.readLine());
+		intStack s1=factorial(n);
+		s1.print();
+	}
+}

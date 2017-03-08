@@ -1,0 +1,67 @@
+package Labs;
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+
+public class Circularlist {
+		class Node {
+			int data;
+			Node link;
+			public Object next;
+			public Node(){
+				data=(Integer) null;
+				link=null;
+			}
+			public Node(int n){
+				data=n;
+				link=null;
+			}
+			public Node(int n,Node k){
+				data=n;
+				link=k;
+			}
+			public void setlink(Node k){
+				link=k;
+			}
+			public Node getLink(){
+				return link;
+			}
+			public void setData(int n){
+				data=n;
+			}
+			public Node next(){
+				this.next = this.link;
+				return this.link;
+				
+			}
+			
+		}
+
+	public void main(String[] args) throws IOException {
+		// TODO Auto-generated method stub
+		BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
+		int T = Integer.parseInt(reader.readLine());
+		for (int l=0;l<T;l++){
+			int N = Integer.parseInt(reader.readLine());
+			Circularlist hulla = new Circularlist();
+			Node first = new Node();
+			Node temp = first;
+			for(int i=1;i<N;i++){
+				Node k = new Node(N);
+				temp.setlink(k);
+				temp = k;
+			}
+			temp.setlink(first);
+			Node x=first;
+			while((x.next()).next() != x){
+				x.setlink((x.next()).getLink());
+				x = x.next();
+			}
+			System.out.print(x.data);
+		}
+		
+		
+		}
+
+	}
+
