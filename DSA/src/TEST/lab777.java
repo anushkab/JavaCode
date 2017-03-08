@@ -1,4 +1,6 @@
 package TEST;
+//factorial of a large number
+//through elemtary stack multiplication
 import java.io.*;
 import java.util.Scanner;
 class stackm{
